@@ -2,7 +2,7 @@
   <div>
     <h1>{{ title }}</h1>
     <ul>
-      <li v-for="item in todoItems" :key="item.dateCreated">
+      <li v-for="item in orderedItems" :key="item.dateCreated">
         <p>
           {{ item.name }}
           <span class="text-mute">{{ `- at ${translateTime(item.dateCreated)}` }}</span>
@@ -41,6 +41,9 @@ export default {
     },
     inCompletedItems() {
       return this.todoItems.filter(t => !t.isCompleted);
+    },
+    orderedItems() {
+      return this.todoItems.sort((a, b) => a.dateCreated - b.dateCreated);
     },
   },
   methods: {
