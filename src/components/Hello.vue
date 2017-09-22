@@ -13,18 +13,6 @@
 <script>
 import TodoItem from './TodoItem';
 
-const todoItems = [{
-  key: Math.random(),
-  name: 'Dzuncoi',
-  dateCreated: new Date().getTime(),
-  isCompleted: true,
-}, {
-  key: Math.random(),
-  name: 'Khanh tien',
-  dateCreated: new Date().getTime() - (Math.random() * 24 * 60 * 60 * 1000),
-  isCompleted: false,
-}];
-
 export default {
   name: 'hello',
   components: {
@@ -32,12 +20,15 @@ export default {
   },
   data() {
     return {
-      todoItems,
+      // todoItems,
       title: 'Item List',
       todoInput: '',
     };
   },
   computed: {
+    todoItems() {
+      return this.$store.state.todoItems;
+    },
     completedItems() {
       return this.todoItems.filter(t => t.isCompleted);
     },
