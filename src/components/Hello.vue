@@ -3,10 +3,7 @@
     <h1>{{ title }}</h1>
     <ul>
       <li v-for="item in orderedItems" :key="item.dateCreated">
-        <p>
-          {{ item.name }}
-          <span class="text-mute">{{ `- at ${translateTime(item.dateCreated)}` }}</span>
-        </p>
+        <todo-item :item="item" key="item.key" />
       </li>
     </ul>
     <input type="text" class="form-input" v-model="todoInput" @keyup.enter="onSubmitTodo">
@@ -14,13 +11,15 @@
 </template>
 
 <script>
-import moment from 'moment';
+import TodoItem from './TodoItem';
 
 const todoItems = [{
+  key: Math.random(),
   name: 'Dzuncoi',
   dateCreated: new Date().getTime(),
   isCompleted: true,
 }, {
+  key: Math.random(),
   name: 'Khanh tien',
   dateCreated: new Date().getTime() - (Math.random() * 24 * 60 * 60 * 1000),
   isCompleted: false,
@@ -28,6 +27,9 @@ const todoItems = [{
 
 export default {
   name: 'hello',
+  components: {
+    TodoItem,
+  },
   data() {
     return {
       todoItems,
@@ -47,7 +49,6 @@ export default {
     },
   },
   methods: {
-    translateTime: time => moment(time).format('hh:mm ddd/MM/YYYY'),
     onSubmitTodo() {
       this.todoItems.push({
         name: this.todoInput,
