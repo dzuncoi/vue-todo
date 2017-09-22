@@ -41,10 +41,14 @@ export default {
   },
   methods: {
     onSubmitTodo() {
-      this.todoItems.push({
+      const newItem = {
         name: this.todoInput,
         dateCreated: new Date().getTime(),
         isCompleted: false,
+      };
+      this.$store.commit({
+        type: 'addTodo',
+        item: newItem,
       });
       this.todoInput = '';
     },
