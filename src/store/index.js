@@ -20,6 +20,11 @@ export default new Vuex.Store({
       },
     ],
   },
+  getters: {
+    completedItems: state => state.todoItems.filter(t => t.isCompleted),
+    inCompletedItems: state => state.todoItems.filter(t => !t.isCompleted),
+    orderedItems: state => state.todoItems.sort((a, b) => a.dateCreated - b.dateCreated),
+  },
   mutations: {
     addTodo(state, payload) {
       state.todoItems.push(payload.item);

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from 'vuex';
 import TodoItem from './TodoItem';
 
 export default {
@@ -26,30 +27,26 @@ export default {
     };
   },
   computed: {
-    todoItems() {
-      return this.$store.state.todoItems;
-    },
-    completedItems() {
-      return this.todoItems.filter(t => t.isCompleted);
-    },
-    inCompletedItems() {
-      return this.todoItems.filter(t => !t.isCompleted);
-    },
-    orderedItems() {
-      return this.todoItems.sort((a, b) => a.dateCreated - b.dateCreated);
-    },
+    ...mapState([
+      'todoItems',
+    ]),
+    ...mapGetters([
+      'completedItems',
+      'inCompletedItems',
+      'orderedItems',
+    ]),
   },
   methods: {
+    ...mapMutations({
+      addTodo: 'addTodo',
+    }),
     onSubmitTodo() {
       const newItem = {
         name: this.todoInput,
         dateCreated: new Date().getTime(),
         isCompleted: false,
       };
-      this.$store.commit({
-        type: 'addTodo',
-        item: newItem,
-      });
+      this.addTodo({ item: newItem });
       this.todoInput = '';
     },
   },
