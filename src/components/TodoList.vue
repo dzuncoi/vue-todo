@@ -15,13 +15,12 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import TodoItem from './TodoItem';
 
 export default {
-  name: 'hello',
+  name: 'TodoList',
   components: {
     TodoItem,
   },
   data() {
     return {
-      // todoItems,
       title: 'Item List',
       todoInput: '',
     };
@@ -45,6 +44,7 @@ export default {
         name: this.todoInput,
         dateCreated: new Date().getTime(),
         isCompleted: false,
+        key: Math.floor(Math.random() * 3000),
       };
       this.addTodo({ item: newItem });
       this.todoInput = '';

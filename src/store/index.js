@@ -7,13 +7,13 @@ export default new Vuex.Store({
   state: {
     todoItems: [
       {
-        key: Math.random(),
+        key: Math.floor(Math.random() * 3000),
         name: 'Dzuncoi',
         dateCreated: new Date().getTime(),
         isCompleted: true,
       },
       {
-        key: Math.random(),
+        key: Math.floor(Math.random() * 3000),
         name: 'Khanh tien',
         dateCreated: new Date().getTime() - (Math.random() * 24 * 60 * 60 * 1000),
         isCompleted: false,
@@ -28,6 +28,10 @@ export default new Vuex.Store({
   mutations: {
     addTodo(state, payload) {
       state.todoItems.push(payload.item);
+    },
+    toggleTodoItem(state, payload) {
+      const item = state.todoItems.filter(i => i.key === payload.id)[0];
+      Vue.set(item, 'isCompleted', !item.isCompleted);
     },
   },
 });
