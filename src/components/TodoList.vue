@@ -50,6 +50,9 @@ export default {
       this.todoInput = '';
     },
   },
+  created() {
+    this.$store.dispatch('getTodoItems');
+  },
 };
 </script>
 

@@ -3,31 +3,45 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const STORAGE_KEY = 'VUE_TODO_ITEMS';
+
 export default new Vuex.Store({
   state: {
-    todoItems: [
-      {
-        key: Math.floor(Math.random() * 3000),
-        name: 'Dzuncoi',
-        dateCreated: new Date().getTime(),
-        isCompleted: true,
-      },
-      {
-        key: Math.floor(Math.random() * 3000),
-        name: 'Khanh tien',
-        dateCreated: new Date().getTime() - (Math.random() * 24 * 60 * 60 * 1000),
-        isCompleted: false,
-      },
-    ],
+    // todoItems: [
+    //   {
+    //     key: Math.floor(Math.random() * 3000),
+    //     name: 'Dzuncoi',
+    //     dateCreated: new Date().getTime(),
+    //     isCompleted: true,
+    //   },
+    //   {
+    //     key: Math.floor(Math.random() * 3000),
+    //     name: 'Khanh tien',
+    //     dateCreated: new Date().getTime() - (Math.random() * 24 * 60 * 60 * 1000),
+    //     isCompleted: false,
+    //   },
+    // ],
+    todoItems: [],
   },
   getters: {
     completedItems: state => state.todoItems.filter(t => t.isCompleted),
     inCompletedItems: state => state.todoItems.filter(t => !t.isCompleted),
     orderedItems: state => state.todoItems.sort((a, b) => a.dateCreated - b.dateCreated),
   },
+  actions: {
+    getTodoItems(context) {
+      const itemStr = localStorage.getItem(STORAGE_KEY) || '[]';
+      const items = JSON.parse(itemStr);
+      context.commit('updateTodo', { items });
+    },
+  },
   mutations: {
+    updateTodo(state, payload) {
+      payload.items.forEach(item => state.todoItems.push(item));
+    },
     addTodo(state, payload) {
       state.todoItems.push(payload.item);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.todoItems));
     },
     toggleTodoItem(state, payload) {
       const item = state.todoItems.filter(i => i.key === payload.id)[0];
@@ -39,6 +53,7 @@ export default new Vuex.Store({
         if (item.key === payload.id) index = i;
       });
       state.todoItems.splice(index, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.todoItems));
     },
   },
 });
