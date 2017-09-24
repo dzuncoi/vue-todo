@@ -33,5 +33,12 @@ export default new Vuex.Store({
       const item = state.todoItems.filter(i => i.key === payload.id)[0];
       Vue.set(item, 'isCompleted', !item.isCompleted);
     },
+    deleteTodoItem(state, payload) {
+      let index;
+      state.todoItems.forEach((item, i) => {
+        if (item.key === payload.id) index = i;
+      });
+      state.todoItems.splice(index, 1);
+    },
   },
 });

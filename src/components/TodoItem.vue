@@ -7,6 +7,7 @@
         <span class="text-mute">{{ `- at ${translatedDate}` }}</span>
       </p>
     </label>
+    <button @click="deleteItem">X</button>
   </div>
 </template>
 
@@ -25,9 +26,13 @@ export default {
   methods: {
     ...mapMutations([
       'toggleTodoItem',
+      'deleteTodoItem',
     ]),
     onChange() {
       this.toggleTodoItem({ id: this.item.key });
+    },
+    deleteItem() {
+      this.deleteTodoItem({ id: this.item.key });
     },
   },
 };
