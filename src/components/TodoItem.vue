@@ -1,12 +1,12 @@
 <template>
   <div>
     <input :id="item.key" type="checkbox" :checked="item.isCompleted" @change="onChange" />
-    <label :for="item.key" class="item-label">
-      <p class="item-text" :class="{ 'in-active': item.isCompleted }">
-        {{ item.name }}
-        <span class="text-mute">{{ `- at ${translatedDate}` }}</span>
-      </p>
-    </label>
+
+    <p class="item-text" :class="{ 'in-active': item.isCompleted }">
+      <router-link :to="`item/${item.key}`">{{ item.name }}</router-link>
+      <span class="text-mute">{{ `- at ${translatedDate}` }}</span>
+    </p>
+
     <button @click="deleteItem">X</button>
   </div>
 </template>
@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<<style>
+<style>
 .item-label:hover {
   cursor: pointer;
   user-select: none;

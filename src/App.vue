@@ -1,18 +1,14 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <todo-list></todo-list>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TodoList from './components/TodoList';
 
 export default {
   name: 'app',
-  components: {
-    TodoList,
-  },
 };
 </script>
 
